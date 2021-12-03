@@ -11,7 +11,6 @@ module.exports = NodeHelper.create({
 
 		console.log('payload', payload);
 
-		console.log('callurl', payload.url + '/rest/agile/1.0/board/');
 		request({
 			url: payload.url + '/rest/agile/1.0/board/',
 			headers: {
@@ -22,9 +21,9 @@ module.exports = NodeHelper.create({
 			},
 			method: 'GET'
 		}, function (error, response, body) {
-			console.log('return from jira call:', error, response, body);
+			console.log('return from jira call:', body);
 			if (!error && response.statusCode == 200) {
-				var result = JSON.parse(response);
+				var result = JSON.parse(response.body);
 				parent.sendSocketNotification('JIRA_RESULT', result);
 			}
 		});
