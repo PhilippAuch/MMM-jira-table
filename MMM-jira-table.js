@@ -6,7 +6,6 @@ Module.register("MMM-jira-table", {
         title: "Jira Sprint",
         updateInterval: 60 * 60 * 1000, // every hour
         fadeSpeed: 1 * 1000, // one seconds
-        jiraApiAuth
     },
 
     start: function () {
