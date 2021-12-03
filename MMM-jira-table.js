@@ -41,7 +41,7 @@ Module.register("MMM-jira-table", {
 
     socketNotificationReceived: function (notification, payload) {
         if (notification == "JIRA_RESULT") {
-            this.result = payload;
+            this.result.jira = payload;
             this.updateDom(this.config.fadeSpeed);
         }
     },
