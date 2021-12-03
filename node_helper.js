@@ -6,24 +6,29 @@ module.exports = NodeHelper.create({
 		console.log('MMM-jira-table helper started');
 	},
 
-	getJoke: function (url) {
+	getJira: function (payload) {
 		var parent = this; // save this object
-		request({ url: 'https://icanhazdadjoke.com',
-			headers:{
-				'Accept':'application/json',
-				'User-Agent': 'MMM-Dad-Jokes (https://github.com/echang15/MMM-Dad-Jokes)'
+
+		request({
+			url: payload.url + '/rest/agile/1.0/board/',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Basic ' + payload.authString,
+				'Accept': 'application/json',
+				'User-Agent': 'MMM-jira-table'
 			},
-			method: 'GET' }, function (error, response, body) {
+			method: 'GET'
+		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var result = JSON.parse(response.body);
-				parent.sendSocketNotification('JOKE_RESULT', result);
+				parent.sendSocketNotification('JIRA_RESULT', result);
 			}
 		});
 	},
 
-	socketNotificationReceived: function(notification, payload) {
-		if (notification == 'GET_JOKE') {
-			this.getJoke(payload);
+	socketNotificationReceived: function (notification, payload) {
+		if (notification == 'GET_JIRA') {
+			this.getJira(payload);
 		}
 	}
 });
