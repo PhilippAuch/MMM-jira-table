@@ -9,7 +9,7 @@ Module.register("MMM-jira-table", {
     },
 
     start: function () {
-        this.getJoke();
+        this.getJira();
         this.scheduleUpdate();
     },
 
@@ -35,7 +35,7 @@ Module.register("MMM-jira-table", {
 
     scheduleUpdate: function () {
         setInterval(() => {
-            this.getJoke();
+            this.getJira();
         }, this.config.updateInterval);
     },
 
