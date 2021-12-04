@@ -9,7 +9,7 @@ module.exports = NodeHelper.create({
 	getJira: function (payload) {
 		var parent = this; // save this object
 
-		console.log('payload', payload);
+		// console.log('payload', payload);
 
 		request({
 			url: payload.url + '/rest/api/2/search?jql=filter%3Dmirror%20ORDER%20BY%20rank%20ASC&maxResults=100',
@@ -21,7 +21,7 @@ module.exports = NodeHelper.create({
 			},
 			method: 'GET'
 		}, function (error, response, body) {
-			console.log('return from jira call:', body);
+			// console.log('return from jira call:', body);
 			if (!error && response.statusCode == 200) {
 				var result = JSON.parse(body);
 				parent.sendSocketNotification('JIRA_RESULT', result.issues);
