@@ -12,7 +12,7 @@ module.exports = NodeHelper.create({
 		console.log('payload', payload);
 
 		request({
-			url: payload.url + '/rest/agile/1.0/board/',
+			url: payload.url + '/rest/api/2/search?jql=filter%3Dmirror%20ORDER%20BY%20rank%20ASC&maxResults=100',
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': 'Basic ' + payload.authString,
@@ -23,8 +23,8 @@ module.exports = NodeHelper.create({
 		}, function (error, response, body) {
 			console.log('return from jira call:', body);
 			if (!error && response.statusCode == 200) {
-				var result = JSON.parse(response.body);
-				parent.sendSocketNotification('JIRA_RESULT', result);
+				var result = JSON.parse(body);
+				parent.sendSocketNotification('JIRA_RESULT', result.issues);
 			}
 		});
 	},
