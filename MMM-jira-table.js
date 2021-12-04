@@ -20,7 +20,7 @@ Module.register("MMM-jira-table", {
             var line = document.createElement('div');
             line.className = 'small light checklist-item';
             var ticketName = document.createElement('span');
-            ticketName.innerHTML = this.result.jira[i].summary;
+            ticketName.innerHTML = ' ' + this.result.jira[i].summary;
             var tickBox = document.createElement('span');
             tickBox.className = this.result.jira[i].status === 'Done' ? 'fa fa-check-square-o' : 'fa fa-square-o';
             line.appendChild(tickBox);
