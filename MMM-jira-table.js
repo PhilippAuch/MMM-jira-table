@@ -13,6 +13,10 @@ Module.register("MMM-jira-table", {
         this.scheduleUpdate();
     },
 
+    getStyles: function () {
+        return ["MMM-jira-table.css"];
+    },
+
     getDom: function () {
         var wrapper = document.createElement("div");
 
