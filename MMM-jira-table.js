@@ -1,6 +1,6 @@
 Module.register("MMM-jira-table", {
 
-    result: { jira: "loading jira table..." },
+    result: { jira: [{ summary: 'loading jira table...', status: 'To Do' }] },
 
     defaults: {
         title: "Jira Sprint",
@@ -16,13 +16,17 @@ Module.register("MMM-jira-table", {
     getDom: function () {
         var wrapper = document.createElement("div");
 
-        var joke = document.createElement("div");
-        joke.className = "bright light medium";
-        joke.style.textAlign = "center";
-        joke.style.margin = "0 auto";
-        joke.innerHTML = this.result["jira"];
-
-        wrapper.appendChild(joke);
+        for (let i = 0; i < this.result.jira.length; i++) {
+            var line = document.createElement('div');
+            line.className = 'small light checklist-item';
+            var ticketName = document.createElement('span');
+            ticketName.innerHTML = this.result.jira[i].fields.summary;
+            var tickBox = document.createElement('span');
+            tickBox.className = this.result.jira[i].fields.status.name === 'Done' ? 'fa fa-check-square-o' : 'fa fa-square-o';
+            line.appendChild(tickBox);
+            line.appendChild(ticketName);
+            wrapper.appendChild(line);
+        }
         return wrapper;
     },
 
@@ -41,11 +45,13 @@ Module.register("MMM-jira-table", {
 
     socketNotificationReceived: function (notification, payload) {
         if (notification == "JIRA_RESULT") {
-            var finalString = '';
+            this.result.jira = [];
             for (let i = 0; i < payload.length; i++) {
-                finalString += payload[i].fields.summary;
+                this.result.jira.push({
+                    summary: payload[i].fields.summary,
+                    status: payload[i].fields.status.name
+                });
             }
-            this.result.jira = finalString;
             this.updateDom(this.config.fadeSpeed);
         }
     },
